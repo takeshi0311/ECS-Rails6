@@ -7,10 +7,11 @@ workflows:
   nginx-deploy:
     jobs:
       - aws-ecr/build-and-push-image:
-          account-url: AWS_ECR_ACCOUNT_URL
-          region: AWS_REGION
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          account-url: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}
+          .amazonaws.com"
+          region: ${AWS_DEFAULT_REGION}
+          aws-access-key-id: ${AWS_ACCESS_KEY_ID}
+          aws-secret-access-key: ${AWS_SECRET_ACCESS_KEY}
           create-repo: true
           dockerfile: ./docker/nginx/Dockerfile
           repo: nginx
@@ -23,16 +24,17 @@ workflows:
             - aws-ecr/build-and-push-image
           family: 'nginx-rails-app' # ECSのタスク定義名
           cluster-name: '${ECS_ARN}'  #ECSのクラスターのARN
-          service-name: 'test'  #サービス名
+          service-name: 'ecs-rails-service'  #サービス名
           container-image-name-updates: "container=nginx,tag=${CIRCLE_SHA1}"
   # Railsのデプロイ
   rails-deploy:
     jobs:
       - aws-ecr/build-and-push-image:
-          account-url: AWS_ECR_ACCOUNT_URL
-          region: AWS_REGION
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          account-url: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}
+          .amazonaws.com"
+          region: ${AWS_DEFAULT_REGION}
+          aws-access-key-id: ${AWS_ACCESS_KEY_ID}
+          aws-secret-access-key: ${AWS_SECRET_ACCESS_KEY}
           create-repo: true
           dockerfile: ./docker/rails/Dockerfile
           repo: rails
@@ -45,7 +47,7 @@ workflows:
             - aws-ecr/build-and-push-image
           family: 'nginx-rails-app' # ECSのタスク定義名
           cluster-name: '${ECS_ARN}' #ECSのクラスターのARN
-          service-name: 'test' #サービス名
+          service-name: 'ecs-rails-service' #サービス名
           container-image-name-updates: "container=rails,tag=${CIRCLE_SHA1}"
 
   
