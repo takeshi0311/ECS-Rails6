@@ -24,7 +24,7 @@ workflows:
           family: 'nginx-rails-app' # ECSのタスク定義名
           cluster-name: '${ECS_ARN}'  #ECSのクラスターのARN
           service-name: 'ecs-rails-service'  #サービス名
-          container-image-name-updates: "container=nginx,tag=${CIRCLE_SHA1}"
+          container-image-name-updates: "container=nginx,tag=${DOCKER_TAGS[@]}"
   # Railsのデプロイ
   rails-deploy:
     jobs:
@@ -46,7 +46,7 @@ workflows:
           family: 'nginx-rails-app' # ECSのタスク定義名
           cluster-name: '${ECS_ARN}' #ECSのクラスターのARN
           service-name: 'ecs-rails-service' #サービス名
-          container-image-name-updates: "container=rails,tag=${CIRCLE_SHA1}"
+          container-image-name-updates: "container=rails,tag=${DOCKER_TAGS[@]}"
 
   
 #AWS_ECR_ACCOUNT_URL => ${アカウントID}.dkr.ecr.${リージョン}.amazonaws.com
