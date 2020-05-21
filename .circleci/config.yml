@@ -21,6 +21,7 @@ workflows:
       - aws-ecs/deploy-service-update:
           requires:
             - aws-ecr/build-and-push-image
+          aws-region: ${AWS_DEFAULT_REGION}
           family: 'nginx-rails-app' # ECSのタスク定義名
           cluster-name: '${ECS_ARN}'  #ECSのクラスターのARN
           service-name: 'ecs-rails-service'  #サービス名
@@ -43,6 +44,7 @@ workflows:
       - aws-ecs/deploy-service-update:
           requires:
             - aws-ecr/build-and-push-image
+          aws-region: ${AWS_DEFAULT_REGION}
           family: 'nginx-rails-app' # ECSのタスク定義名
           cluster-name: '${ECS_ARN}' #ECSのクラスターのARN
           service-name: 'ecs-rails-service' #サービス名
