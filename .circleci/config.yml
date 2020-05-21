@@ -14,7 +14,7 @@ workflows:
           create-repo: true
           dockerfile: ./docker/nginx/Dockerfile
           repo: nginx
-          tag: "${CIRCLE_SHA1}"
+          tag: "${DOCKER_TAGS[@]}"
           filters:
             branches:
               only: master
@@ -36,7 +36,7 @@ workflows:
           create-repo: true
           dockerfile: ./docker/rails/Dockerfile
           repo: rails
-          tag: "${CIRCLE_SHA1}"
+          tag: "${DOCKER_TAGS[@]}"
           filters:
             branches:
               only: master
